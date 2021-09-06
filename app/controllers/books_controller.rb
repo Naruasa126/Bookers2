@@ -10,7 +10,7 @@ class BooksController < ApplicationController
       flash[:success]='You have created book successfully.'
      redirect_to book_path(@books.id)
     else
-      flash[:danger] = "error"
+      flash[:danger] = "error can't be blank"
      redirect_to books_path
     end
   end
@@ -29,6 +29,9 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    if @book.user != current_user
+      redirect_to books_path
+    end
   end
 
   def update
